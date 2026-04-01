@@ -5,6 +5,21 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 10f;
     [SerializeField] private LayerMask groundLayer;
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Триггер сработал! Объект: " + other.name);
+
+        Coin coin = other.GetComponent<Coin>();
+        if (coin != null)
+        {
+            Debug.Log("Монетка найдена!");
+            coin.Collect();
+        }
+        else
+        {
+            Debug.Log("Это не монетка, а: " + other.name);
+        }
+    }
 
     private Rigidbody rb;
 
@@ -32,4 +47,5 @@ public class PlayerController : MonoBehaviour
     {
         return Physics.Raycast(transform.position, Vector3.down, 1.1f, groundLayer);
     }
+   
 }
